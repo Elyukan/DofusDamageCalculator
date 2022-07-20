@@ -2,6 +2,9 @@
 
 from typing import Dict, List, Tuple
 from enum import Enum
+from data_files.boosts import boosts
+from data_files.player_stats import player_stats
+from data_files.spells import spells
 
 
 class Element(Enum):
@@ -51,8 +54,8 @@ class DofusPlayer:
         self.dommages_fixes_terre = int(stats.get("dommages_fixes_terre", 0))
         self.dommages_critiques = int(stats.get("dommages_critiques", 0))
         self.dommages_sort = int(stats.get("dommages_sort", 0))
-        self.point_action = int(stats.get("point_action", 6))
-        self.point_mouvement = int(stats.get("point_mouvement", 3))
+        self.points_action = int(stats.get("points_action", 6))
+        self.points_mouvement = int(stats.get("points_mouvement", 3))
         self.spells = {spell.nom: spell for spell in spells}
         self.boost_puissance = 0
         self.boost_dommages_fixes = 0
@@ -208,39 +211,6 @@ class DofusDamageCalculator:
             print(f"\tMin: {final_critique_min_dommages}")
             print(f"\tMax: {final_critique_max_dommages}")
 
-spells = [
-    {
-        "nom": "Symbiose",
-        "lignes_dommages": [
-            {
-                "element": 1,
-                "dommage_min": 26,
-                "dommage_max": 29,
-                "critique_dommage_min": 31,
-                "critique_dommage_max": 36
-            },
-            {
-                "element": 2, 
-                "dommage_min": 26,
-                "dommage_max": 29,
-                "critique_dommage_min": 31,
-                "critique_dommage_max": 36
-            }
-        ]
-    }
-]
-
-player_stats = {
-    "agilite": 600,
-    "chance": 600,
-    "puissance": 60,
-    "dommages_fixes": 40,
-}
-
-boosts = {
-    "boost_puissance": 200,
-    "boost_dommages_fixes": 220
-}
 
 player_spells = [DofusSpell(**spell) for spell in spells]
 player = DofusPlayer(player_stats, player_spells)
